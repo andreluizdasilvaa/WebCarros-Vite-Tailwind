@@ -7,6 +7,8 @@ import { Dashboard } from './pages/Dashboard';
 import { CarDetails } from './pages/Car';
 
 import { Layout } from './components/layout';
+import { Private } from './routes/Private';
+import { PublicRoute } from './routes/Public';
 
 // Isso para a nossa pagina ficar com a pagina 'Layout' renderizando junto com cada pagina abaixo
 export const router = createBrowserRouter([
@@ -23,21 +25,21 @@ export const router = createBrowserRouter([
       },
       {
         path: '/dashboard',
-        element: <Dashboard />
+        element: <Private> <Dashboard/> </Private>
       },
       {
         path: '/dashboard/new',
-        element: <New />
+        element: <Private> <New/> </Private>
       }
     ]
   },
   // Outro obj de config, para nessas paginas não ficar o component 'Layout' 
   {
     path: '/login',
-    element: <Login />
+    element: <PublicRoute> <Login/> </PublicRoute>
   },
   {
     path: '/register',
-    element: <Register />
+    element: <PublicRoute> <Register/> </PublicRoute>
   }
 ])

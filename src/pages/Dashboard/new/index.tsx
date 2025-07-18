@@ -1,9 +1,9 @@
-
+import { Container } from "../../../components/container"
 
 export function New() {
     return (
-        <div>
+        <Container>
             <h1>Cadastrar carro</h1>
-        </div>
+        </Container>
     )
 }

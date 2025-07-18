@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import LogoImg from '../../assets/logo.svg';
 import { Container } from '../../components/container';
 import { Input } from '../../components/input';
@@ -7,10 +7,11 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 // O zodResolver serve para integrar a validação do Zod com o react-hook-form
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../../services/firebaseConnection';
 import { showErrorToast, showSuccessToast } from '../../ui/showToast';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const scheme = z.object({
     email: z.string()
@@ -28,8 +29,8 @@ const scheme = z.object({
 type FormDate = z.infer<typeof scheme>
 
 export function Register() {
+    const { handleInfoUser } = useContext(AuthContext)
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }} = useForm<FormDate>({
         resolver: zodResolver(scheme),
         mode: 'onSubmit'
@@ -41,6 +42,12 @@ export function Register() {
         .then(async (user) => {
             await updateProfile(user.user, {
                 displayName: data.name
+            })
+
+            handleInfoUser({
+                uid: user.user.uid,
+                name: data.name,
+                email: data.email,
             })
             showSuccessToast('Cadastrado com sucesso!', { position: 'top-center' });
         })

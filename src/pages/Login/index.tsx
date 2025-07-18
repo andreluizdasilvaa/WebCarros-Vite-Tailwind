@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LogoImg from '../../assets/logo.svg';
 import { Container } from '../../components/container';
 import { Input } from '../../components/input';

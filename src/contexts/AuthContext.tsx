@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import { db, auth } from '../services/firebaseConnection';
+import { auth } from '../services/firebaseConnection';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 interface AuthProviderProps {

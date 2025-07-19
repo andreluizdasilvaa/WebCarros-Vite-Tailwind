@@ -18,6 +18,7 @@ export function Input({ type, name, placeholder, error, register, rules }: Input
                 type={type} 
                 {...register(name, rules)}
                 id={name}
+                style={{ borderColor: error && 'red', borderWidth: error && '1px' }}
             />
             {error && <p className="text-red-500">{error}</p>}
         </div>

@@ -13,6 +13,7 @@ import { AuthContext } from "../../../contexts/AuthContext"
 import { uploadToCloudinary } from "../../../utils/uploadToCloudnary"
 import { db } from "../../../services/firebaseConnection"
 import { addDoc, collection, doc, setDoc } from "firebase/firestore"
+import { useNavigate } from "react-router"
 
 const schemeCarro = z.object({
   name: z.string()
@@ -73,6 +74,7 @@ type Image = {
 
 export function New() {
     const { user } = useContext(AuthContext)
+    const navigate = useNavigate()
     const [images, setImages] = useState<Image[]>([])
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, formState: { errors }} = useForm<FormData>({
@@ -103,7 +105,7 @@ export function New() {
 
             // Cadastro no DB ( informações do carro )
             addDoc(collection(db, 'cars'), {
-                name: data.name,
+                name: data.name.toUpperCase(),
                 model: data.model,
                 year: data.year,
                 km: data.km,
@@ -118,6 +120,7 @@ export function New() {
             })
             .then((e) => {
                 showSuccessToast('Carro cadastrado com sucesso!');
+                navigate('/')
             })
             .catch(() => {
                 showErrorToast('Erro ao salvar informações do carro.');
@@ -126,7 +129,6 @@ export function New() {
 
             
         } catch (error) {
-            console.error("Erro ao enviar imagens:", error);
             showErrorToast("Erro ao enviar imagens. Tente novamente.");
         } finally {
             setLoading(false);
@@ -170,7 +172,6 @@ export function New() {
 
     function handleDeleteImage(img:Image) {
         setImages(images.filter((car) => car.uid !== img.uid))
-        console.log(images)
     }
 
     return (

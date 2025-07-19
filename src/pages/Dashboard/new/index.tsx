@@ -4,7 +4,7 @@ import { Container } from "../../../components/container"
 import { DashboardHeader } from "../../../components/panelHeader"
 
 import { useForm } from "react-hook-form"
-import { set, z } from 'zod'
+import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "../../../components/input"
 import { showErrorToast, showSuccessToast } from "../../../ui/showToast"
@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AuthContext } from "../../../contexts/AuthContext"
 import { uploadToCloudinary } from "../../../utils/uploadToCloudnary"
 import { db } from "../../../services/firebaseConnection"
-import { addDoc, collection, doc, setDoc } from "firebase/firestore"
+import { addDoc, collection } from "firebase/firestore"
 import { useNavigate } from "react-router"
 
 const schemeCarro = z.object({
@@ -118,7 +118,7 @@ export function New() {
                 uid: user?.uid,
                 images: carListImages
             })
-            .then((e) => {
+            .then(() => {
                 showSuccessToast('Carro cadastrado com sucesso!');
                 navigate('/')
             })
